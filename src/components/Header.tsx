@@ -15,7 +15,7 @@ import {
 
 export default function Header() {
     const { address, connector, isConnected } = useAccount()
-    const { data: ensAvatar } = useEnsAvatar({ address })
+    const { data: ensAvatar } = useEnsAvatar()
     const { data: ensName } = useEnsName({ address })
     const { connect, connectors, error, isLoading, pendingConnector } =
         useConnect()
@@ -24,11 +24,11 @@ export default function Header() {
 
         if (isConnected) {
             return (
-                <div className="avatar" onClick={disconnect}>
+                <div className="avatar" onClick={() => {disconnect}}>
                     <div className="w-12 rounded-full">
                         <Image 
                             src={ensAvatar ? ensAvatar : "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} 
-                            alt={ensName ? `${ensName} (${address})` : address}
+                            alt={ensName ? `${ensName} (${address})` : address as string}
                             width={48}
                             height={48} />
                     </div>

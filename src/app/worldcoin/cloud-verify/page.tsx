@@ -1,12 +1,13 @@
 "use client"
 
 import {CredentialType, IDKitWidget} from "@worldcoin/idkit";
+import axios from "axios";
 
 export default function CloudVerify () {
 
 
     let onSuccess = () => {
-        alert("succcess");
+        
     };
 
     let handleVerify = () => {

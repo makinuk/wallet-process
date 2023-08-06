@@ -1,17 +1,15 @@
 import {NextRequest, NextResponse} from "next/server";
-import clientPromise from "@/app/lib/mongodb";
-import {Db, MongoClient, WithId} from "mongodb";
+import { DbConnection } from "@/config/MongoDbConf";
+import User from "@/models/UserModel";
 
+DbConnection();
 
 export async function GET(request:NextRequest) {
 
     const address = request.nextUrl.searchParams.get("address");
 
-    const client : MongoClient = await clientPromise;
-    const user = await client.db()
-        .collection("users")
-        .findOne({address:address});
-
+    const user = await User.findOne({address:address})
+    
     return NextResponse.json(user);
 
 }

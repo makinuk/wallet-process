@@ -16,7 +16,7 @@ import { toast } from "react-hot-toast";
 export default function WalletLogin() {
 
     const { address, connector, isConnected } = useAccount();
-    const { data: ensAvatar } = useEnsAvatar({ address });
+    const { data: ensAvatar } = useEnsAvatar();
     const { data: ensName } = useEnsName({ address });
     const { disconnect } = useDisconnect();
 
@@ -43,10 +43,10 @@ export default function WalletLogin() {
         if (isConnected) {
             return (
                 <div>
-                    <img src={ensAvatar} alt="ENS Avatar" />
+                    <img src={ensAvatar as string} alt="ENS Avatar" />
                     <div>{ensName ? `${ensName} (${address})` : address}</div>
 
-                    <button onClick={disconnect}>Disconnect</button>
+                    <button onClick={() => {disconnect}}>Disconnect</button>
                 </div>
             )
         }
