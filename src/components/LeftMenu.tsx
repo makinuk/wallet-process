@@ -6,7 +6,6 @@ import { useAccount } from "wagmi";
 export default function LeftMenu() {
 
   const {isConnected} = useAccount()
-  const token = cookieStore.get("token")?.value || ""
 
     if (!isConnected) {
       return (<></>)
