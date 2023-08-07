@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken"
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
-  const isPublic = path == "/" || path == "/api/user/login"
+  const isPublic = path == "/" || path == "/api/user/login" || path == "/api/user/logout"
 
   const token = request.cookies.get("token")?.value || ''
 
