@@ -1,4 +1,5 @@
 import {
+    Connector,
     useAccount,
     useConnect,
     useDisconnect,
@@ -23,7 +24,7 @@ export default function WalletLogin() {
     const {connect, connectors, error, isLoading, pendingConnector} = useConnect({async onSuccess(data) {
 
             try {
-                const response = await axios.post("/api/user",{address:data.account});
+                const response = await axios.post("/api/user/login",{address:data.account});
 
                 toast.success(response.data);
                 console.log("Already done ",response.data);
@@ -37,6 +38,17 @@ export default function WalletLogin() {
     function handleConnect() {
         const modal = document.getElementById("conWallModal") as HTMLDialogElement
         modal.showModal();
+    }
+
+    function connectorLogo(connector:Connector): ReactNode {
+        switch(connector.id) {
+            case "metaMask" : 
+                return (<Image src={"/static/media/meta-mask.svg"} alt="" width={24} height={24} />)
+            case "walletConnect" : 
+                return (<Image src={"/static/media/wallet-connect.svg"} alt="" width={24} height={24} />)
+            default:
+                return (<Image src={"/static/media/meta-mask.svg"} alt="" width={24} height={24} />)
+        }
     }
 
     function modalData(): ReactNode {
@@ -56,10 +68,12 @@ export default function WalletLogin() {
                 <div>
                     {connectors.map((connector, index) => (
                         <button
+                            className="btn btn-outline btn-block mt-3 justify-start"
                             key={index}
                             //disabled={!connector.ready}
                             onClick={() => connect({connector})}
                         >
+                            {connectorLogo(connector)}
                             {connector.name}
                             {!connector.ready && ' (unsupported)'}
                             {isLoading &&
@@ -83,7 +97,7 @@ export default function WalletLogin() {
                     {modalData()}
                 </form>
             </dialog>
-            <button onClick={handleConnect} className="btn btn-primary">Connect Wallet</button>
+            <button onClick={handleConnect} className="btn btn-outline btn-info btn-sm rounded-md ">Connect Wallet</button>
         </>
     )
 }

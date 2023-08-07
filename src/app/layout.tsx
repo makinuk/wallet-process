@@ -21,6 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 
+
     const { chains, publicClient, webSocketPublicClient } = configureChains(
         [mainnet,polygon,optimism],
         [alchemyProvider({ apiKey: 'lsERNeRav-4vxD6h1Rf4sVg1RhoKwY7L' }), publicProvider()],

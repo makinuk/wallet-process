@@ -12,27 +12,58 @@ import {
     useEnsAvatar,
     useEnsName,
 } from 'wagmi'
+import axios from "axios";
+import toast from "react-hot-toast";
+import  {useRouter} from "next/navigation";
 
 export default function Header() {
+    const router = useRouter()
     const { address, connector, isConnected } = useAccount()
     const { data: ensAvatar } = useEnsAvatar()
     const { data: ensName } = useEnsName({ address })
     const { connect, connectors, error, isLoading, pendingConnector } =
         useConnect()
     const { disconnect } = useDisconnect()
+    
+    
+    async function handleLogout() {
+        try {
+            const response = await axios.post("/api/user/logout");
+            disconnect()
+            router.push("/")
+        } catch (error:any) {
+            toast.error(error.message);
+            console.log("Register Failed",error.message);
+        }
+        
+    }
+    
+    
     function handleLoginButton() {
 
         if (isConnected) {
             return (
-                <div className="avatar" onClick={() => {disconnect}}>
-                    <div className="w-12 rounded-full">
-                        <Image 
+                <div className="dropdown dropdown-end">
+                    <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                        <div className="w-10 rounded-full">
+                        <Image
                             src={ensAvatar ? ensAvatar : "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} 
                             alt={ensName ? `${ensName} (${address})` : address as string}
-                            width={48}
-                            height={48} />
+                            width={32}
+                            height={32} />
+                        </div>
+                    </label>
+                    <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                        <li>
+                        <Link href="/profile" className="justify-between">
+                            Profile<span className="badge badge-sm badge-warning">New</span>
+                        </Link>
+                        </li>
+                        <li><a>Settings</a></li>
+                        <div className="divider"></div> 
+                        <li><a onClick={handleLogout}>Logout</a></li>
+                    </ul>
                     </div>
-                </div>
             )
         }
         else {

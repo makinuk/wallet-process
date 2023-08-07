@@ -2,6 +2,6 @@
 
 export default function Profile() {
     return (<div>
-        mmX
+        Profile Page
     </div>)
 }
