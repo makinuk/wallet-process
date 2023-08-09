@@ -29,6 +29,7 @@ export async function POST(request:NextRequest) {
         return resp;
     }
     catch (e:any) {
+        console.log(e.message)
         return NextResponse.json({
             message:e.message,
         },{status:403})
