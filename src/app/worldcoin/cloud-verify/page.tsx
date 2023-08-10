@@ -1,5 +1,6 @@
 "use client"
 
+import { IUser } from "@/models/UserModel";
 import {CredentialType, IDKitWidget} from "@worldcoin/idkit";
 import axios from "axios";
 
@@ -10,8 +11,15 @@ export default function CloudVerify () {
         
     };
 
-    let handleVerify = () => {
-        alert("handle verify");
+    let handleVerify = async () => {
+
+
+        const upFields = {
+            isWorldIdVerified : true
+        }
+        const resp = await axios.put<IUser>("/api/user/me",upFields)
+
+        console.log(resp.data);
     };
 
     return (<div>

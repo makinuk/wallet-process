@@ -12,8 +12,6 @@ export function middleware(request: NextRequest) {
 
   const token = request.cookies.get("token")?.value || ''
 
-  console.log(isPublic,token,"DATA");
-
   if (!isPublic && token == '') {
       return NextResponse.redirect(new URL("/",request.nextUrl));
   }

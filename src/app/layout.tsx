@@ -59,13 +59,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      
       <WagmiConfig config={config}>
           <Header />
-          <div id="sidebar" className="float-left">
+          <div className="flex mt-1">
+            <div className="flex-none ">
             <LeftMenu />
-          </div>
-          <div className='float-left ml-4'>
-          {children}
+            </div>
+            <div className="flex-auto pl-1">
+              {children}
+            </div>
           </div>
       </WagmiConfig>
       </body>

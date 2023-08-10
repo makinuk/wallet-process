@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {DbConnection} from "@/config/MongoDbConf";
 import User, { IUser } from "@/models/UserModel";
 import jwt from "jsonwebtoken";
+import { TokenData, Utiliy } from "@/helpers/Utility";
 
 DbConnection()
 
@@ -23,8 +24,11 @@ export async function POST(request:NextRequest) {
         })
 
         const resp = NextResponse.json(newUser);
-
-        const token = jwt.sign({ address: newUser.address }, process.env.JWT_TOKEN!, { expiresIn: "1h" })
+        const tokenData: TokenData = {
+            address: newUser.address
+        }
+        
+        const token = Utiliy.tokenEncode(tokenData)
         resp.cookies.set("token",token,{httpOnly:true})
         return resp;
     }
